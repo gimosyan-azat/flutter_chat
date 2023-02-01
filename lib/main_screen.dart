@@ -27,87 +27,93 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: StreamBuilder(
-                stream: channel.stream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    messages.add(Message.fromJson(jsonDecode(
-                        snapshot.hasData ? '${snapshot.data}' : '')));
+        child: Container(
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('images/back.jpg'), fit: BoxFit.cover)),
+          child: Column(
+            children: [
+              Expanded(
+                child: StreamBuilder(
+                  stream: channel.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      messages.add(Message.fromJson(jsonDecode(
+                          snapshot.hasData ? '${snapshot.data}' : '')));
 
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: messages.length,
-                        reverse: true,
-                        itemBuilder: (context, index) {
-                          int reverseIndex = messages.length - 1 - index;
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: messages.length,
+                          reverse: true,
+                          itemBuilder: (context, index) {
+                            int reverseIndex = messages.length - 1 - index;
 
-                          return Row(
-                            children: [
-                              Visibility(
-                                  visible: messages[reverseIndex].from == 'Me'
-                                      ? true
-                                      : false,
-                                  child: const SizedBox(width: 50)),
-                              Expanded(
-                                child: Card(
-                                  color: messages[reverseIndex].from == 'Me'
-                                      ? Colors.green.shade100
-                                      : Colors.white,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(messages[reverseIndex].msg),
+                            return Row(
+                              children: [
+                                Visibility(
+                                    visible: messages[reverseIndex].from == 'Me'
+                                        ? true
+                                        : false,
+                                    child: const SizedBox(width: 50)),
+                                Expanded(
+                                  child: Card(
+                                    color: messages[reverseIndex].from == 'Me'
+                                        ? Colors.green.shade100
+                                        : Colors.white,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(messages[reverseIndex].msg),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Visibility(
-                                  visible: messages[reverseIndex].from == 'Me'
-                                      ? false
-                                      : true,
-                                  child: const SizedBox(width: 50)),
-                            ],
-                          );
-                        },
-                      ),
-                    );
-                  } else {
-                    return const SizedBox.shrink();
-                  }
-                },
-              ),
-            ),
-            Container(
-              color: Colors.grey.shade300,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 300,
-                      height: 40,
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                                Visibility(
+                                    visible: messages[reverseIndex].from == 'Me'
+                                        ? false
+                                        : true,
+                                    child: const SizedBox(width: 50)),
+                              ],
+                            );
+                          },
                         ),
-                        controller: messageController,
-                      ),
-                    ),
-                    ElevatedButton(
-                        onPressed: (() {
-                          channel.sink.add(
-                              '{"userId":"23","msg":"${messageController.text}"}');
-                        }),
-                        child: const Text('Send')),
-                  ],
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
                 ),
               ),
-            ),
-          ],
+              Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 300,
+                        height: 40,
+                        child: TextField(
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.all(8),
+                            border: OutlineInputBorder(),
+                          ),
+                          controller: messageController,
+                        ),
+                      ),
+                      ElevatedButton(
+                          onPressed: (() {
+                            channel.sink.add(
+                                '{"userId":"23","msg":"${messageController.text}"}');
+                          }),
+                          child: const Text('Send')),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
