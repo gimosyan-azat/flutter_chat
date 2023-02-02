@@ -107,21 +107,26 @@ class _MainScreenState extends State<MainScreen> {
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(8))),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: 270,
-                          height: 40,
-                          child: TextField(
-                            decoration: const InputDecoration(
-                              hintText: 'Введите сообщение',
-                              contentPadding: EdgeInsets.all(8),
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide.none),
+                        IconButton(
+                            onPressed: (() {}),
+                            color: Colors.grey.shade400,
+                            icon: const Icon(Icons.emoji_emotions_outlined)),
+                        Expanded(
+                          child: SizedBox(
+                            height: 40,
+                            child: TextField(
+                              autofocus: true,
+                              decoration: const InputDecoration(
+                                hintText: 'Введите сообщение',
+                                contentPadding: EdgeInsets.all(8),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide.none),
+                              ),
+                              controller: messageController,
                             ),
-                            controller: messageController,
                           ),
                         ),
                         IconButton(
