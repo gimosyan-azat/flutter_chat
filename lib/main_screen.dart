@@ -26,6 +26,14 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: const Text(
+          'Чат с поддержкой',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           decoration: const BoxDecoration(
@@ -64,7 +72,17 @@ class _MainScreenState extends State<MainScreen> {
                                         : Colors.white,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text(messages[reverseIndex].msg),
+                                      child: Text(messages[reverseIndex].msg +
+                                          ' ' +
+                                          messages[reverseIndex]
+                                              .dt
+                                              .hour
+                                              .toString() +
+                                          ':' +
+                                          messages[reverseIndex]
+                                              .dt
+                                              .minute
+                                              .toString()),
                                     ),
                                   ),
                                 ),
@@ -104,8 +122,12 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                       ElevatedButton(
                           onPressed: (() {
-                            channel.sink.add(
-                                '{"userId":"23","msg":"${messageController.text}"}');
+                            if (messageController.text.isNotEmpty) {
+                              channel.sink.add(
+                                  '{"userId":"23","msg":"${messageController.text}"}');
+
+                              messageController.text = '';
+                            }
                           }),
                           child: const Text('Send')),
                     ],

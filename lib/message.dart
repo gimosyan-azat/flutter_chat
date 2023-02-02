@@ -6,13 +6,13 @@ part 'message.g.dart';
 class Message {
   final String userId;
   final String msg;
-  //final DateTime dt;
+  final DateTime dt;
   final String from;
 
   const Message(
       {required this.userId,
       required this.msg,
-      //required this.dt,
+      required this.dt,
       required this.from});
 
   factory Message.fromJson(Map<String, dynamic> json) =>
