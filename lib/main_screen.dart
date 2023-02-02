@@ -36,9 +36,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: SafeArea(
         child: Container(
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('images/back.jpg'), fit: BoxFit.cover)),
+          color: Colors.grey.shade100,
           child: Column(
             children: [
               Expanded(
@@ -102,25 +100,33 @@ class _MainScreenState extends State<MainScreen> {
                   },
                 ),
               ),
-              Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 300,
-                        height: 40,
-                        child: TextField(
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.all(8),
-                            border: OutlineInputBorder(),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 270,
+                          height: 40,
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              hintText: 'Введите сообщение',
+                              contentPadding: EdgeInsets.all(8),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide.none),
+                            ),
+                            controller: messageController,
                           ),
-                          controller: messageController,
                         ),
-                      ),
-                      ElevatedButton(
+                        IconButton(
+                          icon: const Icon(Icons.send),
+                          color: Colors.blue,
                           onPressed: (() {
                             if (messageController.text.isNotEmpty) {
                               channel.sink.add(
@@ -129,8 +135,9 @@ class _MainScreenState extends State<MainScreen> {
                               messageController.text = '';
                             }
                           }),
-                          child: const Text('Send')),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
