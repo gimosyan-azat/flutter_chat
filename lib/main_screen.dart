@@ -115,18 +115,17 @@ class _MainScreenState extends State<MainScreen> {
                             color: Colors.grey.shade400,
                             icon: const Icon(Icons.emoji_emotions_outlined)),
                         Expanded(
-                          child: SizedBox(
-                            height: 40,
-                            child: TextField(
-                              autofocus: true,
-                              decoration: const InputDecoration(
-                                hintText: 'Введите сообщение',
-                                contentPadding: EdgeInsets.all(8),
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide.none),
-                              ),
-                              controller: messageController,
+                          child: TextField(
+                            maxLines: null,
+                            keyboardType: TextInputType.multiline,
+                            autofocus: true,
+                            decoration: const InputDecoration(
+                              hintText: 'Введите сообщение',
+                              contentPadding: EdgeInsets.all(8),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide.none),
                             ),
+                            controller: messageController,
                           ),
                         ),
                         IconButton(
