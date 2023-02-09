@@ -7,9 +7,9 @@ part of 'message.dart';
 // **************************************************************************
 
 Message _$MessageFromJson(Map<String, dynamic> json) => Message(
+      messageId: json['messageId'] as int,
       forUserGuid: json['forUserGuid'] as String,
       userGuid: json['userGuid'] as String,
-      messageId: json['messageId'] as int,
       message: json['message'] as String,
       createdOn: DateTime.parse(json['createdOn'] as String),
       userFirstName: json['userFirstName'] as String,
@@ -19,9 +19,9 @@ Message _$MessageFromJson(Map<String, dynamic> json) => Message(
     );
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
+      'messageId': instance.messageId,
       'forUserGuid': instance.forUserGuid,
       'userGuid': instance.userGuid,
-      'messageId': instance.messageId,
       'message': instance.message,
       'createdOn': instance.createdOn.toIso8601String(),
       'userFirstName': instance.userFirstName,

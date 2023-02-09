@@ -1,2 +1,3 @@
 const String apiHost = 'https://advantchat.ru';
-const String apiKey = '6c6429b2d6fde367596a9c6c69020393';
+const String apiKey =
+    '77ffbc2db9fbd4dc11508b18d71cce3fec21a6cc4812ac1dc3ac17c1bdda99b6';

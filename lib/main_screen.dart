@@ -25,24 +25,24 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
 
-    //loadData();
+    loadData();
 
-    messages.add(Message(
-        messageId: 123,
-        forUserGuid: 'AzatGUID',
-        userGuid: "userGuid",
-        message: "message",
-        createdOn: DateTime.now(),
-        userFirstName: "userFirstName",
-        userLastName: "userLastName",
-        userType: "userType",
-        userProfile: "userProfile"));
+    // messages.add(Message(
+    //     messageId: 123,
+    //     forUserGuid: 'AzatGUID',
+    //     userGuid: "userGuid",
+    //     message: "message",
+    //     createdOn: DateTime.now(),
+    //     userFirstName: "userFirstName",
+    //     userLastName: "userLastName",
+    //     userType: "userType",
+    //     userProfile: "userProfile"));
   }
 
   void loadData() async {
     futureCompany = UserService.init(const User(
-        firstName: "Flutter",
-        lastName: "Google",
+        firstName: "Azat",
+        lastName: "Gimosyan",
         email: "info@dfd.com",
         phone: "+79145465454",
         fcmToken: "fcmToken",
@@ -168,7 +168,7 @@ class _MainScreenState extends State<MainScreen> {
                           onPressed: (() {
                             if (messageController.text.isNotEmpty) {
                               channel.sink.add(
-                                  '{"userId":"23","msg":"${messageController.text}"}');
+                                  '{"userGuid":"d567b3ff-edbd-464f-8cb2-869a83ea6d2f","forUserGuid":"d567b3ff-edbd-464f-8cb2-869a83ea6d2f","message":"${messageController.text}"}');
 
                               messageController.text = '';
                             }

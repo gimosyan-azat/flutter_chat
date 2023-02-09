@@ -6,7 +6,7 @@ part 'company.g.dart';
 class Company {
   final int id;
   final String name;
-  final String profile;
+  final String? profile;
 
   const Company({
     required this.id,

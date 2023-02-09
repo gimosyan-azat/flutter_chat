@@ -41,25 +41,19 @@ class UserService {
     }
 
     final response = await http.post(
-      Uri.parse("$apiHost/api/chat.php"),
+      Uri.parse("$apiHost/api/get.php"),
       headers: headers,
       body: jsonEncode(requestJson),
     );
 
     if (response.statusCode == 200) {
-      Map<String, dynamic> responseBody = jsonDecode(response.body);
+      var list = jsonDecode(response.body) as List<dynamic>;
 
-      if (responseBody['status'].toString() == 'error') {
-        return null;
-      } else {
-        var list = jsonDecode(response.body) as List<dynamic>;
-
-        return list
-            .map((e) => Message.fromJson(e as Map<String, dynamic>))
-            .toList();
-      }
+      return list
+          .map((e) => Message.fromJson(e as Map<String, dynamic>))
+          .toList();
     } else {
-      throw Exception('Failed to init');
+      throw Exception('Failed to get Messages');
     }
   }
 }
