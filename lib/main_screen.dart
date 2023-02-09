@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/message.dart';
+import 'package:flutter_chat/models/company.dart';
+import 'package:flutter_chat/models/message.dart';
+import 'package:flutter_chat/models/user.dart';
+import 'package:flutter_chat/services/user_service.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class MainScreen extends StatefulWidget {
@@ -15,6 +18,38 @@ class _MainScreenState extends State<MainScreen> {
       WebSocketChannel.connect(Uri.parse('wss://mulurequa.beget.app:8090/'));
   List<Message> messages = [];
   TextEditingController messageController = TextEditingController();
+  late Future<Company?> futureCompany;
+  late Future<List<Message>?> futureMessages;
+
+  @override
+  void initState() {
+    super.initState();
+
+    //loadData();
+
+    messages.add(Message(
+        messageId: 123,
+        forUserGuid: 'AzatGUID',
+        userGuid: "userGuid",
+        message: "message",
+        createdOn: DateTime.now(),
+        userFirstName: "userFirstName",
+        userLastName: "userLastName",
+        userType: "userType",
+        userProfile: "userProfile"));
+  }
+
+  void loadData() async {
+    futureCompany = UserService.init(const User(
+        firstName: "Flutter",
+        lastName: "Google",
+        email: "info@dfd.com",
+        phone: "+79145465454",
+        fcmToken: "fcmToken",
+        userProfile: "images/1.jpg"));
+
+    futureMessages = UserService.getMessages();
+  }
 
   @override
   void dispose() {
@@ -43,9 +78,11 @@ class _MainScreenState extends State<MainScreen> {
                 child: StreamBuilder(
                   stream: channel.stream,
                   builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      messages.add(Message.fromJson(jsonDecode(
-                          snapshot.hasData ? '${snapshot.data}' : '')));
+                    if (messages.isNotEmpty) {
+                      if (snapshot.hasData) {
+                        messages.add(Message.fromJson(jsonDecode(
+                            snapshot.hasData ? '${snapshot.data}' : '')));
+                      }
 
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -59,35 +96,32 @@ class _MainScreenState extends State<MainScreen> {
                             return Row(
                               children: [
                                 Visibility(
-                                    visible: messages[reverseIndex].from == 'Me'
-                                        ? true
-                                        : false,
+                                    visible:
+                                        messages[reverseIndex].userFirstName ==
+                                                'Azat'
+                                            ? true
+                                            : false,
                                     child: const SizedBox(width: 50)),
                                 Expanded(
                                   child: Card(
-                                    color: messages[reverseIndex].from == 'Me'
-                                        ? Colors.green.shade100
-                                        : Colors.white,
+                                    color:
+                                        messages[reverseIndex].userFirstName ==
+                                                'Azat'
+                                            ? Colors.green.shade100
+                                            : Colors.white,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text(messages[reverseIndex].msg +
-                                          ' ' +
-                                          messages[reverseIndex]
-                                              .dt
-                                              .hour
-                                              .toString() +
-                                          ':' +
-                                          messages[reverseIndex]
-                                              .dt
-                                              .minute
-                                              .toString()),
+                                      child: Text(
+                                          '${messages[reverseIndex].message} ${messages[reverseIndex].createdOn.hour} : ${messages[reverseIndex].createdOn.minute}'),
                                     ),
                                   ),
                                 ),
                                 Visibility(
-                                    visible: messages[reverseIndex].from == 'Me'
-                                        ? false
-                                        : true,
+                                    visible:
+                                        messages[reverseIndex].userFirstName ==
+                                                'Azat'
+                                            ? false
+                                            : true,
                                     child: const SizedBox(width: 50)),
                               ],
                             );

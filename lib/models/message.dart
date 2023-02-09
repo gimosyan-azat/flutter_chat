@@ -4,9 +4,9 @@ part 'message.g.dart';
 
 @JsonSerializable()
 class Message {
+  final int messageId;
   final String forUserGuid;
   final String userGuid;
-  final int messageId;
   final String message;
   final DateTime createdOn;
   final String userFirstName;
@@ -15,9 +15,9 @@ class Message {
   final String userProfile;
 
   const Message({
+    required this.messageId,
     required this.forUserGuid,
     required this.userGuid,
-    required this.messageId,
     required this.message,
     required this.createdOn,
     required this.userFirstName,
