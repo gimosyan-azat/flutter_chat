@@ -14,12 +14,14 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final channel =
-      WebSocketChannel.connect(Uri.parse('wss://mulurequa.beget.app:8090/'));
+  final channel = WebSocketChannel.connect(Uri.parse(
+      'wss://mulurequa.beget.app:8090/?token=ff52a8241959c3ce2b5bbf014a62dcf2838e92f9d0cea82138a9978315f2600e'));
   List<Message> messages = [];
   TextEditingController messageController = TextEditingController();
-  late Future<Company?> futureCompany;
-  late Future<List<Message>?> futureMessages;
+  // late Future<Company?> futureCompany;
+  // late Future<List<Message>?> futureMessages;
+  Company? company;
+  List<Message>? apiMessages;
 
   @override
   void initState() {
@@ -40,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void loadData() async {
-    futureCompany = UserService.init(const User(
+    company = await UserService.init(const User(
         firstName: "Azat",
         lastName: "Gimosyan",
         email: "info@dfd.com",
@@ -48,7 +50,14 @@ class _MainScreenState extends State<MainScreen> {
         fcmToken: "fcmToken",
         userProfile: "images/1.jpg"));
 
-    futureMessages = UserService.getMessages();
+    apiMessages = await UserService.getMessages();
+    if (apiMessages != null) {
+      for (Message m in apiMessages!) {
+        messages.add(m);
+      }
+    }
+
+    setState(() {});
   }
 
   @override
@@ -78,12 +87,12 @@ class _MainScreenState extends State<MainScreen> {
                 child: StreamBuilder(
                   stream: channel.stream,
                   builder: (context, snapshot) {
-                    if (messages.isNotEmpty) {
-                      if (snapshot.hasData) {
-                        messages.add(Message.fromJson(jsonDecode(
-                            snapshot.hasData ? '${snapshot.data}' : '')));
-                      }
+                    if (snapshot.hasData) {
+                      messages.add(Message.fromJson(jsonDecode(
+                          snapshot.hasData ? '${snapshot.data}' : '')));
+                    }
 
+                    if (messages.isNotEmpty) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ListView.builder(

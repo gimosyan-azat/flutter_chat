@@ -13,9 +13,9 @@ Message _$MessageFromJson(Map<String, dynamic> json) => Message(
       message: json['message'] as String,
       createdOn: DateTime.parse(json['createdOn'] as String),
       userFirstName: json['userFirstName'] as String,
-      userLastName: json['userLastName'] as String,
+      userLastName: json['userLastName'] as String?,
       userType: json['userType'] as String,
-      userProfile: json['userProfile'] as String,
+      userProfile: json['userProfile'] as String?,
     );
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{

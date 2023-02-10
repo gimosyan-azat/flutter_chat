@@ -10,9 +10,9 @@ class Message {
   final String message;
   final DateTime createdOn;
   final String userFirstName;
-  final String userLastName;
+  final String? userLastName;
   final String userType;
-  final String userProfile;
+  final String? userProfile;
 
   const Message({
     required this.messageId,
