@@ -94,7 +94,7 @@ class _MainScreenState extends State<MainScreen> {
 
                     if (messages.isNotEmpty) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: messages.length,
@@ -103,7 +103,9 @@ class _MainScreenState extends State<MainScreen> {
                             int reverseIndex = messages.length - 1 - index;
 
                             return Padding(
-                              padding: const EdgeInsets.all(4.0),
+                              padding: reverseIndex == messages.length - 1
+                                  ? const EdgeInsets.only(bottom: 8.0)
+                                  : const EdgeInsets.only(bottom: 0),
                               child: Row(
                                 children: [
                                   Visibility(
@@ -116,15 +118,17 @@ class _MainScreenState extends State<MainScreen> {
                                   Expanded(
                                     child: Card(
                                       elevation: 0,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 4),
                                       color: messages[reverseIndex]
                                                   .userFirstName ==
                                               'Azat'
-                                          ? Colors.green.shade100
+                                          ? Colors.blue.shade200
                                           : Colors.white,
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                            '${messages[reverseIndex].message} ${messages[reverseIndex].createdOn.hour} : ${messages[reverseIndex].createdOn.minute}'),
+                                            '${messages[reverseIndex].message} ${messages[reverseIndex].createdOn.hour}:${messages[reverseIndex].createdOn.minute}'),
                                       ),
                                     ),
                                   ),
