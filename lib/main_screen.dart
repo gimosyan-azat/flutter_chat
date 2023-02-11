@@ -94,7 +94,7 @@ class _MainScreenState extends State<MainScreen> {
 
                     if (messages.isNotEmpty) {
                       return Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: messages.length,
@@ -102,37 +102,41 @@ class _MainScreenState extends State<MainScreen> {
                           itemBuilder: (context, index) {
                             int reverseIndex = messages.length - 1 - index;
 
-                            return Row(
-                              children: [
-                                Visibility(
-                                    visible:
-                                        messages[reverseIndex].userFirstName ==
-                                                'Azat'
-                                            ? true
-                                            : false,
-                                    child: const SizedBox(width: 50)),
-                                Expanded(
-                                  child: Card(
-                                    color:
-                                        messages[reverseIndex].userFirstName ==
-                                                'Azat'
-                                            ? Colors.green.shade100
-                                            : Colors.white,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                          '${messages[reverseIndex].message} ${messages[reverseIndex].createdOn.hour} : ${messages[reverseIndex].createdOn.minute}'),
+                            return Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                children: [
+                                  Visibility(
+                                      visible: messages[reverseIndex]
+                                                  .userFirstName ==
+                                              'Azat'
+                                          ? true
+                                          : false,
+                                      child: const SizedBox(width: 50)),
+                                  Expanded(
+                                    child: Card(
+                                      elevation: 0,
+                                      color: messages[reverseIndex]
+                                                  .userFirstName ==
+                                              'Azat'
+                                          ? Colors.green.shade100
+                                          : Colors.white,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                            '${messages[reverseIndex].message} ${messages[reverseIndex].createdOn.hour} : ${messages[reverseIndex].createdOn.minute}'),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Visibility(
-                                    visible:
-                                        messages[reverseIndex].userFirstName ==
-                                                'Azat'
-                                            ? false
-                                            : true,
-                                    child: const SizedBox(width: 50)),
-                              ],
+                                  Visibility(
+                                      visible: messages[reverseIndex]
+                                                  .userFirstName ==
+                                              'Azat'
+                                          ? false
+                                          : true,
+                                      child: const SizedBox(width: 50)),
+                                ],
+                              ),
                             );
                           },
                         ),
@@ -144,7 +148,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                 child: Container(
                   decoration: const BoxDecoration(
                       color: Colors.white,
