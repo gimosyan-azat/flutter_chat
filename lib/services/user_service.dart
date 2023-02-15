@@ -31,19 +31,19 @@ class UserService {
     }
   }
 
-  static Future<List<Message>?> getMessages({int? beforeMEssageId}) async {
+  static Future<List<Message>?> getMessages({int? beforeMessageId}) async {
     Map<String, String> headers = await AuthService.getAuthHeaders();
     headers['Content-Type'] = 'application/json';
     String requestJson = '';
 
-    if (beforeMEssageId != null) {
-      requestJson = '{"beforeMEssageId": $beforeMEssageId}';
+    if (beforeMessageId != null) {
+      requestJson = '{"beforeMessageId": $beforeMessageId}';
     }
 
     final response = await http.post(
       Uri.parse("$apiHost/api/get.php"),
       headers: headers,
-      body: jsonEncode(requestJson),
+      body: requestJson,
     );
 
     if (response.statusCode == 200) {
